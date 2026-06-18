@@ -1,0 +1,13 @@
+# Граф для same-generation query (Query 1 из статьи)
+# Вершины: 0,1,2,3 — узлы онтологии
+# subClassOf_r — обратные рёбра (inverse subClassOf)
+# Формат: src,label,dst
+0,subClassOf,1
+1,subClassOf,2
+2,subClassOf,3
+3,subClassOf,0
+1,subClassOf_r,0
+0,subClassOf_r,1
+1,subClassOf_r,2
+2,subClassOf_r,3
+3,subClassOf_r,0

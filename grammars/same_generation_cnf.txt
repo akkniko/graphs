@@ -1,0 +1,14 @@
+# Same-generation query (Query 1 из статьи Azimov & Grigorev)
+# Находит все пары вершин, находящихся на одном уровне иерархии
+# Используется с графом same_generation.csv
+# Стартовый нетерминал: S
+#
+# Исходные правила:
+#   S -> subClassOf_r S subClassOf
+#   S -> subClassOf_r subClassOf
+# После приведения к CNF:
+S -> SC_R_NT S1
+S1 -> S SC_NT
+S -> SC_R_NT SC_NT
+SC_NT -> subClassOf
+SC_R_NT -> subClassOf_r

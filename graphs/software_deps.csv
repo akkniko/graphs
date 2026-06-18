@@ -1,0 +1,12 @@
+# Граф зависимостей программных модулей
+# Вершины: 0=App, 1=ServiceA, 2=ServiceB, 3=DB, 4=Cache, 5=Logger
+# Метки: dependsOn (прямая зависимость), imports (импорт модуля)
+# Формат: src,label,dst
+0,dependsOn,1
+0,dependsOn,2
+1,dependsOn,3
+2,dependsOn,3
+1,dependsOn,4
+3,imports,5
+4,imports,5
+2,dependsOn,1

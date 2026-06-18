@@ -1,0 +1,8 @@
+# Граф объектной модели — иерархия классов
+# Вершины: 0=Base, 1=Mid, 2=Top, 3=Component
+# Метки: subclassOf (наследование), fieldOf (поле/ссылка)
+# Формат: src,label,dst
+0,subclassOf,1
+1,subclassOf,2
+0,fieldOf,3
+3,fieldOf,1

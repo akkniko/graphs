@@ -1,0 +1,8 @@
+# Грамматика: транзитивное замыкание по рёбрам subclassOf
+# Находит все пары (A, B) такие, что A наследует B (прямо или через цепочку)
+# Используется с графом object_model.csv
+# Стартовый нетерминал: Inherit
+#
+# Правило: Inherit -> subclassOf | subclassOf Inherit
+Inherit -> subclassOf Inherit
+Inherit -> subclassOf
