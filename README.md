@@ -3,7 +3,6 @@
 Работа про исследование задачи **Context-Free Path Querying (CFPQ)** - поиск пар вершин $(u, v)$ в направленном помеченном графе, пути между которыми формируют слова, принадлежащие заданному контекстно-свободному языку
 
 -----
-\
 ## 2. Ключевая идея исследования
 Основная идея заключается в представлении топологии графа и правил грамматики в виде матриц смежности и их последующей итеративной обработке до достижения фиксированной точки
 ----
@@ -53,3 +52,23 @@
  - python main.py --example paper
  или
  - python main.py --graph путь_к_графу.csv --grammar путь_к_грамматике.txt --start S --algo both
+
+
+## структура проекта: 
+cfpq/
+├── main.py                         
+├── cfpq_matrix.py                  
+├── cfpq_kronecker.py               
+├── grammar_utils.py                
+├── requirements.txt
+├── graphs/
+│   ├── paper_double_cycle.csv      - пример из статьи (4 вершины, a/b)
+│   ├── object_model.csv            - иерархия классов (subclassOf, fieldOf)
+│   ├── same_generation.csv         - граф для Query 1 из статьи
+│   └── software_deps.csv           - граф зависимостей модулей
+└── grammars/
+    ├── anbn_cnf.txt                - L={a^n b^n}, в CNF (для matrix)
+    ├── anbn_free.txt               - L={a^n b^n}, свободная форма (для kronecker)
+    ├── transitive_subclass.txt     - транзитивное наследование
+    ├── same_generation_cnf.txt     - same-generation query в CNF
+    └── transitive_dep.txt          - транзитивные зависимости модулей
