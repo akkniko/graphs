@@ -1,19 +1,18 @@
 """
-research/check_diagonal.py — Исследование 1.
-
-Проверка цикла типа a^n в графе.
+Исследование 1 - проверка цикла типа a^n в графе
 
 Идея: если класс A через цепочку рёбер типа 'a' (например subclassOf)
 достигает сам себя, то в результирующей матрице T_S[A, A] = 1,
 то есть нетерминал S присутствует на диагонали матрицы.
-
-Это означает нарушение — например, циклическое наследование.
-
-Запуск:
-    python research/check_diagonal.py graphs/inheritance_cycle.csv  grammars/subclassof_cnf.txt S
-    python research/check_diagonal.py graphs/inheritance_ok.csv     grammars/subclassof_cnf.txt S
-    python research/check_diagonal.py graphs/paper_double_cycle.csv grammars/anbn_cnf.txt       S
 """
+
+
+'''
+пример команды запуска программы
+python research/check_diagonal.py graphs/inheritance_cycle.csv grammars/subclassof_cnf.txt S
+python research/check_diagonal.py graphs/inheritance_ok.csv    grammars/subclassof_cnf.txt S
+python research/check_diagonal.py graphs/paper_double_cycle.csv grammars/anbn_cnf.txt S
+'''
 
 import sys
 import os
@@ -25,10 +24,6 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from cfpq_matrix import Grammar, LabeledGraph, cfpq_matrix
 from grammar_utils import parse_and_normalize
 
-
-# ---------------------------------------------------------------------------
-# Вспомогательные функции
-# ---------------------------------------------------------------------------
 
 def load_graph(path: str) -> Tuple[List[Tuple[int, str, int]], int]:
     edges, max_node = [], -1
@@ -51,10 +46,6 @@ def load_grammar(path: str) -> str:
         return f.read()
 
 
-# ---------------------------------------------------------------------------
-# Основная функция исследования
-# ---------------------------------------------------------------------------
-
 def check_diagonal(
     graph_path: str,
     grammar_path: str,
@@ -62,10 +53,10 @@ def check_diagonal(
     node_names: Optional[Dict[int, str]] = None,
 ) -> List[int]:
     """
-    Запускает CFPQ, извлекает матрицу T_S и проверяет диагональ.
+    Запуск CFPQ, извлечение матрицы T_S и проверка диагонали
 
     Возвращает список индексов вершин, у которых T_S[i,i] = 1,
-    то есть вершин, участвующих в цикле по языку грамматики.
+    т.е.  вершин, участвующих в цикле по языку грамматики
     """
     edges, num_nodes = load_graph(graph_path)
     grammar_text = load_grammar(grammar_path)
@@ -82,7 +73,6 @@ def check_diagonal(
 
     pairs = results.get(start_nt, [])
 
-    # Диагональные элементы — пары (i, i)
     diagonal_nodes = sorted(i for (i, j) in pairs if i == j)
 
     print(f"  Время CFPQ:          {elapsed:.4f} с")
@@ -90,17 +80,16 @@ def check_diagonal(
     print()
 
     if diagonal_nodes:
-        print(f"  ✗ ОБНАРУЖЕНЫ ЦИКЛЫ ({len(diagonal_nodes)} вершин):")
+        print(f"  x ОБНАРУЖЕНЫ ЦИКЛЫ ({len(diagonal_nodes)} вершин):")
         for v in diagonal_nodes:
             name = node_names.get(v, str(v)) if node_names else str(v)
             print(f"      вершина {v} ({name}) достигает сама себя")
         print()
         print("  Вывод: граф содержит запрещённый цикл по правилам грамматики.")
     else:
-        print("  ✓ ЦИКЛОВ НЕТ — диагональ T_S нулевая.")
+        print("  + ЦИКЛОВ НЕТ - диагональ T_S нулевая.")
         print("  Вывод: ни одна вершина не достигает себя по правилам грамматики.")
 
-    # Дополнительная статистика
     print()
     print("  Все найденные пары R_S:")
     for i, j in sorted(pairs):
@@ -112,10 +101,7 @@ def check_diagonal(
     return diagonal_nodes
 
 
-# ---------------------------------------------------------------------------
-# Детальный анализ: какие конкретно цепочки образуют цикл
-# ---------------------------------------------------------------------------
-
+#какие конкретно цепочки образуют цикл
 def trace_cycles(
     graph_path: str,
     grammar_path: str,
@@ -123,10 +109,6 @@ def trace_cycles(
     node_names: Optional[Dict[int, str]] = None,
     max_depth: int = 10,
 ) -> None:
-    """
-    После нахождения цикличных вершин пытается найти конкретный
-    путь, образующий цикл, через BFS по рёбрам графа.
-    """
     edges, num_nodes = load_graph(graph_path)
     cyclic_nodes = check_diagonal(graph_path, grammar_path, start_nt, node_names)
 
@@ -134,9 +116,9 @@ def trace_cycles(
         return
 
     print()
-    print("  === Трассировка путей, образующих циклы ===")
+    print("===========Трассировка путей, образующих циклы=======================")
 
-    # Строим словарь смежности
+    #словарь смежности
     adj: Dict[int, List[Tuple[str, int]]] = {i: [] for i in range(num_nodes)}
     for src, lbl, dst in edges:
         adj[src].append((lbl, dst))

@@ -14,7 +14,6 @@ from scipy.sparse import csr_matrix, kron, lil_matrix
 from scipy.sparse.csgraph import connected_components
 
 
-# Рекурсивный автомат (RSM) из КС-грамматики
 
 @dataclass
 class RSMBox:
@@ -33,7 +32,6 @@ class RSMBox:
 
 @dataclass
 class RSM:
-    """Полный RSM — словарь {нетерминал: RSMBox}."""
     boxes: Dict[str, RSMBox] = field(default_factory=dict)
     start_nonterminal: str = "S"
 
@@ -114,7 +112,6 @@ def cfpq_kronecker(
 
     n = num_nodes  # число вершин графа
 
-    #Матрицы смежности графа по каждой метке: M_label[n×n]
     graph_matrices: Dict[str, lil_matrix] = {
         lbl: lil_matrix((n, n), dtype=np.bool_) for lbl in all_labels
     }
@@ -124,7 +121,6 @@ def cfpq_kronecker(
         lbl: m.tocsr() for lbl, m in graph_matrices.items()
     }
 
-    #Матрицы автомата по каждой метке: R_label[Q×Q] где Q = сумма состояний
     state_offset: Dict[str, int] = {}
     total_rsm_states = 0
     for nt, box in rsm.boxes.items():
