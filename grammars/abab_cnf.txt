@@ -1,0 +1,25 @@
+# Язык a^m b^k a^i b^j в CNF
+# S  -> A_part B_part
+# A_part -> a | a A_part   (a^m)
+# B_part -> b_then_rest | b
+# ... разворачиваем вручную:
+# S   -> Ap1 Bp1
+# Ap1 -> a | a Ap1
+# Bp1 -> Bk1 Ap2
+# Bk1 -> b | b Bk1
+# Ap2 -> a | a Ap2
+# Bp2 -> b | b Bp2
+# Финальная форма S -> Ap1 Mid
+# Mid -> Bk1 Right
+# Right -> Ap2 Bp2
+S   -> Ap1 Mid
+Mid -> Bk1 Right
+Right -> Ap2 Bp2
+Ap1 -> a
+Ap1 -> a Ap1
+Bk1 -> b
+Bk1 -> b Bk1
+Ap2 -> a
+Ap2 -> a Ap2
+Bp2 -> b
+Bp2 -> b Bp2

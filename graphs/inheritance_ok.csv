@@ -1,0 +1,4 @@
+# Граф без цикла наследования
+0,subclassOf,1
+1,subclassOf,2
+3,subclassOf,1

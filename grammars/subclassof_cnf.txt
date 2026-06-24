@@ -1,0 +1,4 @@
+# Транзитивное замыкание subclassOf -> CNF
+# S -> subclassOf | subclassOf S
+S -> subclassOf S
+S -> subclassOf

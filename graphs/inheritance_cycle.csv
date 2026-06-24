@@ -1,0 +1,5 @@
+# Граф с циклом наследования: A->B->C->A (плохо)
+0,subclassOf,1
+1,subclassOf,2
+2,subclassOf,0
+3,subclassOf,1
